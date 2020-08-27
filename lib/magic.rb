@@ -9,18 +9,21 @@ require "uri"
 # Version
 require "magic/version"
 
-# API Support Classes
-require "magic/support/errors"
-require "magic/support/config"
-require "magic/support/util"
+# Magic API Classes
+require "magic/util"
+require "magic/config"
+require "magic/errors"
 
 # HTTP Classes
 require "magic/http/client"
 require "magic/http/request"
 require "magic/http/response"
 
-# API Client Class
+# Magic API Client
 require "magic/client"
+
+# Magic Test Classes
+require "test"
 
 module Magic
 end

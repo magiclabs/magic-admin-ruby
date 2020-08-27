@@ -2,7 +2,7 @@
 
 module Magic
   class Client
-    attr_reader :secret_key, :http_client
+    attr_reader :secret_key, :http_client, :user, :token
 
     class << self
       def client(api_secret_key)
@@ -11,10 +11,12 @@ module Magic
     end
 
     def initialize(api_secret_key)
-      @secret_key = api_secret_key
-      @http_client = Http::Client
-      @http_request = Http::Request
+      @secret_key    = api_secret_key
+      @http_client   = Http::Client
+      @http_request  = Http::Request
       @http_response = Http::Response
+      @user          = User.new
+      @token         = Token.new
     end
 
     def call(method, path, options={})
