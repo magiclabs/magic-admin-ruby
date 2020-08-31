@@ -34,16 +34,16 @@ class Magic
                  timeout: 10,
                  backoff: 0.03)
 
-    Config.request_retries = retries
-    Config.request_timeout = timeout
-    Config.request_backoff = backoff
+    MagicAdmin::Config.request_retries = retries
+    MagicAdmin::Config.request_timeout = timeout
+    MagicAdmin::Config.request_backoff = backoff
 
     @secret_key    = api_secret_key
-    @api_base      = Config.api_base
+    @api_base      = MagicAdmin::Config.api_base
 
-    @http_client   = Http::Client
-    @http_request  = Http::Request
-    @http_response = Http::Response
+    @http_client   = MagicAdmin::Http::Client
+    @http_request  = MagicAdmin::Http::Request
+    @http_response = MagicAdmin::Http::Response
   end
 
   def call(method, path, options = {})
@@ -69,8 +69,6 @@ class Magic
   end
 
   def headers
-    raise UnauthorizedError, "Unauthorized" unless secret_key?
-
     {
       "content-type": "application/json",
       "X-Magic-Secret-Key": secret_key,
