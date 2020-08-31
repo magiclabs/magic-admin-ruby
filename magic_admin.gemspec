@@ -2,11 +2,11 @@
 
 $LOAD_PATH.unshift(::File.join(::File.dirname(__FILE__), "lib"))
 
-require "magic/version"
+require "magic_admin/version"
 
 Gem::Specification.new do |s|
   s.name = "magic-admin"
-  s.version = Magic::VERSION
+  s.version = MagicAdmin::VERSION
   s.required_ruby_version = ">= 2.3.0"
   s.summary = "Ruby bindings for the Magic Admin API"
 
@@ -21,8 +21,10 @@ Gem::Specification.new do |s|
   s.metadata = {
   }
 
+  s.add_dependency "eth", "~> 0.4"
+
   s.files = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- test/*`.split("\n")
+  # s.test_files    = `git ls-files -- test/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n")
                                            .map { |f| ::File.basename(f) }
   s.require_paths = ["lib"]

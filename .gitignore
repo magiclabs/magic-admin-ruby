@@ -1,2 +1,6 @@
+magic-admin-*.gem
+Gemfile.lock
 .rvmrc
 .ruby-version
+.byebug_history
+

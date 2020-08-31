@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-module Magic
-  module Util
+module MagicAdmin
+  # Util Class
+  class Util
     class << self
       def platform_info
         {
@@ -14,7 +15,7 @@ module Magic
 
       def user_agent
         {
-          sdk_version: Magic.VERSION,
+          sdk_version: MagicAdmin::VERSION,
           publisher: Config.publisher,
           platform: platform_info
         }

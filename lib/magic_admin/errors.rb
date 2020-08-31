@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-module Magic
+module MagicAdmin
+  # MagicError Class
   class MagicError < StandardError
     attr_reader :message
 
@@ -12,6 +13,7 @@ module Magic
   class DIDTokenError < MagicError; end
   class APIConnectionError < MagicError; end
 
+  # HTTPRequestError Class
   class HTTPRequestError < MagicError
     attr_reader :http_status
     attr_reader :http_code
@@ -35,9 +37,10 @@ module Magic
     end
   end
 
-  class RateLimitingError < HTTPRequestError; end
+  class TooManyRequestsError < HTTPRequestError; end
   class BadRequestError < HTTPRequestError; end
-  class AuthenticationError < HTTPRequestError; end
+  class UnauthorizedError < HTTPRequestError; end
   class ForbiddenError < HTTPRequestError; end
+  class RequestTimeoutError < HTTPRequestError; end
   class APIError < HTTPRequestError; end
 end

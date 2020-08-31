@@ -1,30 +1,21 @@
 # frozen_string_literal: true
 
-module Magic
+module MagicAdmin
+  # Config Class
   class Config
     class << self
-      def request_retries
-        @request_retries || 0
-      end
+      attr_writer :request_retries, :request_timeout, :request_backoff
 
-      def request_retries=(retries)
-        @request_retries = retries
+      def request_retries
+        @request_retries || 3
       end
 
       def request_timeout
-        @request_timeout
-      end
-
-      def request_timeout=(timeout)
-        @request_timeout = timeout
+        @request_timeout || 10
       end
 
       def request_backoff
-        @request_backoff || 1
-      end
-
-      def request_backoff=(backoff)
-        @request_backoff = backoff
+        @request_backoff || 0.03
       end
 
       def platform
@@ -32,7 +23,7 @@ module Magic
       end
 
       def language
-        'ruby'
+        "ruby"
       end
 
       def language_version
@@ -43,12 +34,8 @@ module Magic
         Etc.getpwnam(Etc.getlogin).gecos.split(/,/).first
       end
 
-      def sdk_version
-        Magic.VERSION
-      end
-
       def publisher
-        'MagicLabs'
+        "MagicLabs"
       end
 
       def api_base
