@@ -10,8 +10,10 @@ module MagicAdmin
     end
 
     def metadata_by_issuer(issuer)
-      options = { params: { issuer: issuer } }
-      magic_client.call(:get, "/v1/admin/auth/user/get", options)
+      headers = Util.headers(magic_client.secret_key)
+      options = { params: { issuer: issuer }, headers: headers }
+      magic_client.http_client
+                  .call(:get, "/v1/admin/auth/user/get", options)
     end
 
     def metadata_by_public_address(public_address)
@@ -25,8 +27,10 @@ module MagicAdmin
     end
 
     def logout_by_issuer(issuer)
-      options = { params: { issuer: issuer } }
-      magic_client.call(:post, "/v2/admin/auth/user/logout", options)
+      headers = Util.headers(magic_client.secret_key)
+      options = { params: { issuer: issuer }, headers: headers }
+      magic_client.http_client
+                  .call(:post, "/v2/admin/auth/user/logout", options)
     end
 
     def logout_by_public_address(public_address)

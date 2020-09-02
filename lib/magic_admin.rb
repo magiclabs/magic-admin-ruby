@@ -25,41 +25,59 @@ require "magic_admin/http/response"
 require "magic_admin/token"
 require "magic_admin/user"
 
+# Magic Class to access resources
 class Magic
-  attr_reader :secret_key, :api_base
-  attr_reader :http_client, :http_request, :http_response
+  attr_reader :secret_key, :http_client
 
-  def initialize(api_secret_key: ENV["MAGIC_API_SECRET_KEY"],
-                 retries: 3,
-                 timeout: 10,
-                 backoff: 0.03)
+  # Description:
+  #   The constructor allows you to specify your own API secret key
+  #   and HTTP request strategy when your application is interacting
+  #   with the Magic API.
+  #
+  #   it will automatically configuring required argument
+  #   using following environment variables
+  #   MAGIC_API_SECRET_KEY
+  #   MAGIC_API_RETRIES
+  #   MAGIC_API_TIMEOUT
+  #   MAGIC_API_BACKOFF
 
-    MagicAdmin::Config.request_retries = retries
-    MagicAdmin::Config.request_timeout = timeout
-    MagicAdmin::Config.request_backoff = backoff
+  # Arguments:
+  #   api_secret_key: Your API Secret Key retrieved from the Magic Dashboard.
+  #   retries: Total number of retries to allow.
+  #   timeout: A period of time the request is going to wait for a response.
+  #   backoff: A backoff factor to apply between retry attempts.
+  #
+  # Returns:
+  #   A Magic object that provides access to all the supported resources.
 
-    @secret_key    = api_secret_key
-    @api_base      = MagicAdmin::Config.api_base
-
-    @http_client   = MagicAdmin::Http::Client
-    @http_request  = MagicAdmin::Http::Request
-    @http_response = MagicAdmin::Http::Response
+  def initialize(api_secret_key: nil,
+                 retries: nil,
+                 timeout: nil,
+                 backoff: nil)
+    secret_key!(api_secret_key)
+    http_client!(retries, timeout, backoff)
   end
 
-  def call(method, path, options = {})
-    options.merge!({ headers: headers })
-    url = URI("#{api_base}#{path}")
-    request = http_request.request(method, url, options)
-    response = http_client.client(request, url)
-    http_response.from_net_http(response, request)
-  end
+  # Description:
+  #   Method provides you User object
+  #   for interacting with the Magic API.
+  #
+  # Returns:
+  #   A User object that provides access to all the supported resources.
 
   def user
     MagicAdmin::User.new(self)
   end
 
+  # Description:
+  #   Method provides you Token object
+  #   for various utility methods of Token.
+  #
+  # Returns:
+  #   A Token object that provides access to all the supported resources.
+
   def token
-    MagicAdmin::Token
+    MagicAdmin::Token.new
   end
 
   private
@@ -68,11 +86,18 @@ class Magic
     !(secret_key.nil? || secret_key.empty?)
   end
 
-  def headers
-    {
-      "content-type": "application/json",
-      "X-Magic-Secret-Key": secret_key,
-      "User-Agent": MagicAdmin::Util.user_agent
-    }
+  def secret_key!(api_secret_key)
+    @secret_key = api_secret_key || ENV["MAGIC_API_SECRET_KEY"]
+    message = "Magic api secret key was not found."
+
+    raise MagicAdmin::MagicError.new(message) unless secret_key?
+  end
+
+  def http_client!(retries, timeout, backoff)
+    @http_client = MagicAdmin::Http::Client
+                   .new(MagicAdmin::Config.api_base,
+                        retries || ENV["MAGIC_API_RETRIES"] || 3,
+                        timeout || ENV["MAGIC_API_TIMEOUT"] || 5,
+                        backoff || ENV["MAGIC_API_BACKOFF"] || 0.02)
   end
 end

@@ -1,46 +1,31 @@
 # frozen_string_literal: true
 
+# MagicAdmin::Config module to access configuration info methods
 module MagicAdmin
   # Config Class
-  class Config
-    class << self
-      attr_writer :request_retries, :request_timeout, :request_backoff
+  module Config
+    def self.platform
+      RUBY_PLATFORM
+    end
 
-      def request_retries
-        @request_retries || 3
-      end
+    def self.language
+      "ruby"
+    end
 
-      def request_timeout
-        @request_timeout || 10
-      end
+    def self.language_version
+      RUBY_VERSION
+    end
 
-      def request_backoff
-        @request_backoff || 0.03
-      end
+    def self.user_name
+      Etc.getpwnam(Etc.getlogin).gecos.split(/,/).first
+    end
 
-      def platform
-        RUBY_PLATFORM
-      end
+    def self.publisher
+      "MagicLabs"
+    end
 
-      def language
-        "ruby"
-      end
-
-      def language_version
-        RUBY_VERSION
-      end
-
-      def user_name
-        Etc.getpwnam(Etc.getlogin).gecos.split(/,/).first
-      end
-
-      def publisher
-        "MagicLabs"
-      end
-
-      def api_base
-        "https://api.magic.link"
-      end
+    def self.api_base
+      "https://api.magic.link"
     end
   end
 end

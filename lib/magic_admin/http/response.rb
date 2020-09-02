@@ -8,17 +8,17 @@ module MagicAdmin
 
       def self.from_net_http(http_resp, request)
         resp = Response.new(http_resp)
-        case http_resp
-        when Net::HTTPBadRequest
-          raise BadRequestError.new(resp.message, resp.error_opt(request))
-        when Net::HTTPUnauthorized
-          raise UnauthorizedError.new(resp.message, resp.error_opt(request))
-        when Net::HTTPForbidden
-          raise ForbiddenError.new(resp.message, resp.error_opt(request))
-        when Net::HTTPTooManyRequests
-          raise TooManyRequestsError.new(resp.message, resp.error_opt(request))
-        else resp
-        end
+        error = case http_resp
+                when Net::HTTPBadRequest then BadRequestError
+                when Net::HTTPUnauthorized then UnauthorizedError
+                when Net::HTTPForbidden then ForbiddenError
+                when Net::HTTPTooManyRequests then TooManyRequestsError
+                end
+        return resp unless error
+
+        message = resp.message
+        error_options = resp.error_opt(request)
+        raise error.new(message, error_options)
       end
 
       def initialize(http_resp)

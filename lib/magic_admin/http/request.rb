@@ -15,16 +15,17 @@ module MagicAdmin
       end
 
       def get(url, options)
-        headers = options.delete(:headers)
-        params = options.delete(:params)
-        req = Net::HTTP::Get.new(uri_with_params(url, params))
+        headers = options[:headers] || {}
+        params = options[:params] || {}
+        url = url_with_params(url, params)
+        req = Net::HTTP::Get.new(url)
         request_with_headers(req, headers)
       end
 
       def post(url, options)
+        headers = options[:headers] || {}
+        params = options[:params] || {}
         req = Net::HTTP::Post.new(url)
-        headers = options.delete(:headers)
-        params = options
         req = request_with_headers(req, headers)
         request_with_params(req, params)
       end
@@ -38,9 +39,9 @@ module MagicAdmin
         req
       end
 
-      def uri_with_params(uri, params)
-        uri.query = URI.encode_www_form(params)
-        uri
+      def url_with_params(url, params)
+        url.query = URI.encode_www_form(params)
+        url
       end
 
       def request_with_params(req, params)
