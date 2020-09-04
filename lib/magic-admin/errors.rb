@@ -52,7 +52,7 @@ module MagicAdmin
     # Returns:
     #   A Error object that provides additional error info for magic api call.
 
-    def initialize(message, opt)
+    def initialize(message, opt = {})
       super(message)
       @http_status = opt[:http_status]
       @http_code = opt[:http_code]

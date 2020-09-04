@@ -2,7 +2,6 @@
 
 # MagicAdmin::Config module to access configuration info methods
 module MagicAdmin
-  # Config Class
   module Config
     def self.platform
       RUBY_PLATFORM
@@ -26,6 +25,10 @@ module MagicAdmin
 
     def self.api_base
       "https://api.magic.link"
+    end
+
+    def self.nbf_grace_period
+      300
     end
   end
 end

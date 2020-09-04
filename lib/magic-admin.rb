@@ -9,21 +9,21 @@ require "base64"
 require "eth"
 
 # Version
-require "magic_admin/version"
+require "magic-admin/version"
 
 # Magic API Classes
-require "magic_admin/util"
-require "magic_admin/config"
-require "magic_admin/errors"
+require "magic-admin/util"
+require "magic-admin/config"
+require "magic-admin/errors"
 
 # HTTP Classes
-require "magic_admin/http/client"
-require "magic_admin/http/request"
-require "magic_admin/http/response"
+require "magic-admin/http/client"
+require "magic-admin/http/request"
+require "magic-admin/http/response"
 
 # Magic Resource Classes
-require "magic_admin/token"
-require "magic_admin/user"
+require "magic-admin/resource/token"
+require "magic-admin/resource/user"
 
 # Magic Class to access resources
 class Magic
@@ -66,7 +66,7 @@ class Magic
   #   A User object that provides access to all the supported resources.
 
   def user
-    MagicAdmin::User.new(self)
+    MagicAdmin::Resource::User.new(self)
   end
 
   # Description:
@@ -77,7 +77,7 @@ class Magic
   #   A Token object that provides access to all the supported resources.
 
   def token
-    MagicAdmin::Token.new
+    MagicAdmin::Resource::Token.new
   end
 
   private

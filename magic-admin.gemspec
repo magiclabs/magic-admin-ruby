@@ -2,7 +2,7 @@
 
 $LOAD_PATH.unshift(::File.join(::File.dirname(__FILE__), "lib"))
 
-require "magic_admin/version"
+require "magic-admin/version"
 
 Gem::Specification.new do |s|
   s.name = "magic-admin"
@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   }
 
   s.add_dependency "eth", "~> 0.4"
+  s.add_development_dependency "rspec"
 
   s.files = `git ls-files`.split("\n")
   # s.test_files    = `git ls-files -- test/*`.split("\n")

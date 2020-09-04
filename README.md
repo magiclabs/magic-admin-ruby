@@ -22,7 +22,7 @@ $ gem install magic-admin
 
 ### Prerequisites
 
-- Ruby 2.3
+- Ruby 2.3+
 
 ## Quick Start
 Before you start, you will need an API secret key. You can get one from the [Magic Dashboard](https://dashboard.magic.link/). Once you have the API secret key, you can instantiate a Magic object.

@@ -9,7 +9,10 @@ module MagicAdmin
           case method
           when :get, "get" then new.get(url, options)
           when :post, "post" then new.post(url, options)
-          else raise BadRequestError, "TODO ERROR MESSAGE"
+          else
+            message = "Request method not supported."
+            opt = { http_method: method }
+            raise APIError.new(message, opt)
           end
         end
       end

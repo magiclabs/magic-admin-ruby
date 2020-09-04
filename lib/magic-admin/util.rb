@@ -2,7 +2,6 @@
 
 # MagicAdmin::Util module to access utility methods for header info
 module MagicAdmin
-  # Util Class
   module Util
     def self.platform_info
       {
