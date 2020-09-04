@@ -8,9 +8,9 @@ module MagicAdmin
       attr_reader :http_request, :http_response
 
       def initialize(api_base, req_retries, req_timeout, req_backoff)
-        @retries = req_retries
-        @backoff = req_backoff
-        @timeout = req_timeout
+        @retries = req_retries.to_i
+        @backoff = req_backoff.to_f
+        @timeout = req_timeout.to_i
         @base_url = api_base
         @http_request = Request
         @http_response = Response
