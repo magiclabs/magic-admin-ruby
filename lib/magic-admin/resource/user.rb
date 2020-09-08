@@ -4,6 +4,7 @@ module MagicAdmin
   module Resource
     # User Class
     class User
+      # attribute reader for magic client object
       attr_reader :magic_client
 
       def initialize(magic_client)

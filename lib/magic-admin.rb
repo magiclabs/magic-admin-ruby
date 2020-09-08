@@ -27,20 +27,23 @@ require "magic-admin/resource/user"
 
 # Magic Class to access resources
 class Magic
-  attr_reader :secret_key, :http_client
+  # attribute reader for magic api secret key
+  attr_reader :secret_key
 
-  # Description:
-  #   The constructor allows you to specify your own API secret key
-  #   and HTTP request strategy when your application is interacting
-  #   with the Magic API.
+  # attribute reader for magic http client
+  attr_reader :http_client
+
+  # The constructor allows you to specify your own API secret key
+  # and HTTP request strategy when your application interacting
+  # with the Magic API.
   #
-  #   it will automatically configuring required argument
-  #   using following environment variables
+  # it will automatically configuring required argument
+  # using following environment variables
   #   MAGIC_API_SECRET_KEY
   #   MAGIC_API_RETRIES
   #   MAGIC_API_TIMEOUT
   #   MAGIC_API_BACKOFF
-
+  #
   # Arguments:
   #   api_secret_key: Your API Secret Key retrieved from the Magic Dashboard.
   #   retries: Total number of retries to allow.
@@ -49,6 +52,13 @@ class Magic
   #
   # Returns:
   #   A Magic object that provides access to all the supported resources.
+  #
+  # Examples:
+  #
+  #   Magic.new
+  #   Magic.new api_secret_key: "SECRET_KEY>"
+  #   Magic.new api_secret_key: "SECRET_KEY>", retries: 2, timeout: 2, backoff: 0.2
+  #
 
   def initialize(api_secret_key: nil,
                  retries: nil,

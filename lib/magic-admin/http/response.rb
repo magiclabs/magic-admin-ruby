@@ -4,7 +4,17 @@ module MagicAdmin
   module Http
     # Response Class
     class Response
-      attr_reader :json_data, :http_body, :http_status, :message
+      # attribute reader for response json_data
+      attr_reader :json_data
+
+      # attribute reader for response body
+      attr_reader :http_body
+
+      # attribute reader for response status
+      attr_reader :http_status
+
+      # attribute reader for response message
+      attr_reader :message
 
       def self.from_net_http(http_resp, request)
         resp = Response.new(http_resp)

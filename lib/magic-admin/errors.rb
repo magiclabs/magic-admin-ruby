@@ -3,6 +3,7 @@
 module MagicAdmin
   # MagicAdmin::MagicError class
   class MagicError < StandardError
+    # attribute reader for error message
     attr_reader :message
 
     # Description:
@@ -24,13 +25,28 @@ module MagicAdmin
 
   # HTTPRequestError Class
   class HTTPRequestError < MagicError
+    # attribute reader for http response status
     attr_reader :http_status
+
+    # attribute reader for http response code
     attr_reader :http_code
+
+    # attribute reader for http response
     attr_reader :http_response
+
+    # attribute reader for http response message
     attr_reader :http_message
+
+    # attribute reader for http response error code
     attr_reader :http_error_code
+
+    # attribute reader for http request params
     attr_reader :http_request_params
+
+    # attribute reader for http request data
     attr_reader :http_request_data
+
+    # attribute reader for http request method
     attr_reader :http_method
 
     # Description:

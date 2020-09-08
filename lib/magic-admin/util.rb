@@ -3,6 +3,17 @@
 # MagicAdmin::Util module to access utility methods for header info
 module MagicAdmin
   module Util
+    # Description:
+    #   Method provides you platform information hash
+    #
+    # Returns:
+    #   hash with following keys.
+    #   platform:
+    #   language:
+    #   language_version:
+    #   user_name:
+    #
+
     def self.platform_info
       {
         platform: Config.platform,
@@ -12,6 +23,16 @@ module MagicAdmin
       }
     end
 
+    # Description:
+    #   Method provides you user agent hash
+    #
+    # Returns:
+    #   hash with following keys.
+    #   sdk_version:
+    #   publisher:
+    #   platform:
+    #
+
     def self.user_agent
       {
         sdk_version: MagicAdmin::VERSION,
@@ -19,6 +40,19 @@ module MagicAdmin
         platform: platform_info
       }
     end
+
+    # Description:
+    #   Method provides you request headers hash
+    #
+    # Arguments:
+    #   secret_key: API Secret Key.
+    #
+    # Returns:
+    #   hash with following keys.
+    #   content-type:
+    #   X-Magic-Secret-Key:
+    #   User-Agent:
+    #
 
     def self.headers(secret_key)
       {
