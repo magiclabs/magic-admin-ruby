@@ -19,12 +19,12 @@ module MagicAdmin
       end
 
       def metadata_by_public_address(public_address)
-        issuer = Token.issuer_by_public_address(public_address)
+        issuer = token.issuer_by_public_address(public_address)
         metadata_by_issuer(issuer)
       end
 
       def metadata_by_did_token(did_token)
-        issuer = Token.issuer_by_did_token(did_token)
+        issuer = token.issuer_by_did_token(did_token)
         metadata_by_issuer(issuer)
       end
 
@@ -36,13 +36,19 @@ module MagicAdmin
       end
 
       def logout_by_public_address(public_address)
-        issuer = Token.issuer_by_public_address(public_address)
+        issuer = token.issuer_by_public_address(public_address)
         logout_by_issuer(issuer)
       end
 
       def logout_by_did_token(did_token)
-        issuer = Token.issuer_by_did_token(did_token)
+        issuer = token.issuer_by_did_token(did_token)
         logout_by_issuer(issuer)
+      end
+
+      private
+
+      def token
+        magic_client.token
       end
     end
   end

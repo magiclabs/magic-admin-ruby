@@ -2,6 +2,7 @@ require 'bundler/setup'
 Bundler.setup
 
 require 'magic-admin'
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   #config.syntax = :expect
