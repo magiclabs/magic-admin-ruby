@@ -61,7 +61,7 @@ describe MagicAdmin::Http::Client do
     context "#base_client" do
       it "calling http request with arguments" do
         url = double("url", scheme: "https", host: "localhost", port: 3000)
-        request = double("request", )
+        request = double("request")
         read_timeout = double("read_timeout")
 
         expect(Net::HTTP).to receive(:start).with(url.host,
