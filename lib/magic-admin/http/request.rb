@@ -87,7 +87,7 @@ module MagicAdmin
       end
 
       def request_with_params(req, params)
-        req.set_form_data(params)
+        req.body = params.to_json
         req
       end
     end
