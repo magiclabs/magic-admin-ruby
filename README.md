@@ -1,5 +1,5 @@
 # magic-admin-ruby
-
+The Magic Admin Ruby provides convenient ways for developers to interact with Magic API endpoints and an array of utilities to handle DID Token.
 
 ## Installation
 Add this line to your application's Gemfile:
