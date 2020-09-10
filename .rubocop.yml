@@ -30,3 +30,11 @@ Style/NumericPredicate:
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*.rb"
+
+Layout/LineLength:
+  Exclude:
+    - "spec/**/*.rb"
