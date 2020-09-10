@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# MagicAdmin
+# MagicAdmin module provides methods/classes to interact with Magic Admin
 module MagicAdmin
   # Config module to access configuration info methods
   module Config

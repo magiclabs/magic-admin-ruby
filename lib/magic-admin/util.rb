@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# MagicAdmin::
+# MagicAdmin module provides methods/classes to interact with Magic Admin
 module MagicAdmin
   # Util module to access utility methods for header info
   module Util

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# MagicAdmin module provides methods/classes to interact with Magic Admin
 module MagicAdmin
   module Resource
     # The user resource and its methods are accessible
