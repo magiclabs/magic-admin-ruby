@@ -17,15 +17,15 @@ describe MagicAdmin::Http::Request do
       end
 
       it "when method is GET" do
-        expect_any_instance_of(described_class).to receive(:get).with(url,
-                                                                      options)
+        expect_any_instance_of(described_class).to receive(:get)
+          .with(url, options)
 
         described_class.request(:get, url, options)
       end
 
       it "when method is POST" do
-        expect_any_instance_of(described_class).to receive(:post).with(url,
-                                                                       options)
+        expect_any_instance_of(described_class).to receive(:post)
+          .with(url, options)
 
         described_class.request(:post, url, options)
       end
@@ -35,16 +35,18 @@ describe MagicAdmin::Http::Request do
   context "#get" do
     it "return response" do
       expect(subject.get(url, options)).to be_instance_of(Net::HTTP::Get)
-      expect(subject.get(url,
-                         options).uri.to_s).to eq("https://api.magic.link/v1/admin/auth/user/get?")
+
+      expected = "https://api.magic.link/v1/admin/auth/user/get?"
+      expect(subject.get(url, options).uri.to_s).to eq(expected)
     end
   end
 
   context "#post" do
     it "return response" do
       expect(subject.post(url, options)).to be_instance_of(Net::HTTP::Post)
-      expect(subject.post(url,
-                          options).uri.to_s).to eq("https://api.magic.link/v1/admin/auth/user/get")
+
+      expected = "https://api.magic.link/v1/admin/auth/user/get"
+      expect(subject.post(url, options).uri.to_s).to eq(expected)
     end
   end
 end

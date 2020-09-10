@@ -37,4 +37,8 @@ Metrics/BlockLength:
 
 Layout/LineLength:
   Exclude:
-    - "spec/**/*.rb"
+    - "spec1/**/*.rb"
+
+Naming/FileName:
+  Exclude:
+    - "lib/magic-admin.rb"

@@ -44,46 +44,55 @@ describe MagicAdmin::Resource::User do
 
   context "#metadata_by_public_address" do
     it "return response" do
-      stub_request(:get, "https://api.magic.link/v1/admin/auth/user/get?issuer=#{issuer_by_public_address}")
+      url = "https://api.magic.link/v1/admin/auth/user/get?issuer="
+      url += issuer_by_public_address
+      stub_request(:get, url)
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
-
-      expect(subject.metadata_by_public_address(public_address).http_status).to eq(200)
+      reps = subject.metadata_by_public_address(public_address)
+      expect(reps.http_status).to eq(200)
     end
   end
 
   context "#metadata_by_did_token" do
     it "return response" do
-      stub_request(:get, "https://api.magic.link/v1/admin/auth/user/get?issuer=#{issuer}")
+      url = "https://api.magic.link/v1/admin/auth/user/get?issuer="
+      url += issuer
+      stub_request(:get, url)
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
+      reps = subject.metadata_by_did_token(spec_did_token)
 
-      expect(subject.metadata_by_did_token(spec_did_token).http_status).to eq(200)
+      expect(reps.http_status).to eq(200)
     end
   end
 
   context "#logout_by_issuer" do
     it "return response" do
-      stub_request(:post, "https://api.magic.link/v2/admin/auth/user/logout")
+      url = "https://api.magic.link/v2/admin/auth/user/logout"
+      stub_request(:post, url)
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
+      reps = subject.logout_by_issuer(issuer)
 
-      expect(subject.logout_by_issuer(issuer).http_status).to eq(200)
+      expect(reps.http_status).to eq(200)
     end
   end
 
   context "#logout_by_public_address" do
     it "return response" do
-      stub_request(:post, "https://api.magic.link/v2/admin/auth/user/logout")
+      url = "https://api.magic.link/v2/admin/auth/user/logout"
+      stub_request(:post, url)
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
-
-      expect(subject.logout_by_public_address(public_address).http_status).to eq(200)
+      reps = subject.logout_by_public_address(public_address)
+      expect(reps.http_status).to eq(200)
     end
   end
 
   context "#logout_by_did_token" do
     it "return response" do
-      stub_request(:post, "https://api.magic.link/v2/admin/auth/user/logout")
+      url = "https://api.magic.link/v2/admin/auth/user/logout"
+      stub_request(:post, url)
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
-
-      expect(subject.logout_by_did_token(spec_did_token).http_status).to eq(200)
+      reps = subject.logout_by_did_token(spec_did_token)
+      expect(reps.http_status).to eq(200)
     end
   end
 end

@@ -13,44 +13,52 @@ describe MagicAdmin::Resource::Token do
         allow(Time).to receive(:now).and_return(time_now)
 
         expect(subject).to receive(:decode).and_return([proof, claim])
-        expect(subject).to receive(:rec_pub_address).with(claim,
-                                                          proof).and_return(rec_address)
-        expect(subject).to receive(:validate_public_address!).with(
-          rec_address, spec_did_token
-        )
         expect(subject).to receive(:validate_claim_fields!).with(claim)
-        expect(subject).to receive(:validate_claim_ext!).with(time_now,
-                                                              claim["ext"])
-        expect(subject).to receive(:validate_claim_nbf!).with(time_now,
-                                                              claim["nbf"])
+
+        expect(subject).to receive(:rec_pub_address)
+          .with(claim, proof)
+          .and_return(rec_address)
+
+        expect(subject).to receive(:validate_public_address!)
+          .with(rec_address, spec_did_token)
+
+        expect(subject).to receive(:validate_claim_ext!)
+          .with(time_now, claim["ext"])
+
+        expect(subject).to receive(:validate_claim_nbf!)
+          .with(time_now, claim["nbf"])
 
         subject.validate(spec_did_token)
       end
 
       context "#decode" do
         it "with valid token" do
-          decode_val = [ "0x7f634e8853b40b96a13b3a26770b7e8c58051cd924"\
-                         "5ce9a8b863033bc200558751473e2eb8c5ec8aacdf40"\
-                         "28052e4a61a6ac285196996ec2ff6f86a7881a7f951c",
-                         {
-                          "iat" => 1_599_149_991,
-                          "ext" => 1_599_150_891,
-                          "iss" => "did:ethr:0x8580De53bA37B4205CdD0286D033592fCFfce0A6",
-                          "sub" => "wSDilvMIsxZvqP6EwIXyde-n7gjlq58TG-OnuTczNrk=",
-                          "aud" => "did:magic:79f22edb-dace-4019-ae7a-ece6ed0a01a4",
-                          "nbf" => 1_599_149_991,
-                          "tid" => "35a27161-14a2-42c7-9f9b-ebaa77048ccd",
-                          "add" => "0xa5f77a05a1f40f1d07bc908185ebd31e5681e"\
-                                  "8568c32b033561053b9ce982a1603373cd528c1d5"\
-                                  "cdace59035cb8f2a8b159cc7b5dbbf8309220737b35eba3ee91b"
-                        }
-                       ]
+          clam_hash = {
+            "iat" => 1_599_149_991,
+            "ext" => 1_599_150_891,
+            "iss" => "did:ethr:0x8580De53bA37B4205CdD0286D033592fCFfce0A6",
+            "sub" => "wSDilvMIsxZvqP6EwIXyde-n7gjlq58TG-OnuTczNrk=",
+            "aud" => "did:magic:79f22edb-dace-4019-ae7a-ece6ed0a01a4",
+            "nbf" => 1_599_149_991,
+            "tid" => "35a27161-14a2-42c7-9f9b-ebaa77048ccd",
+            "add" => "0xa5f77a05a1f40f1d07bc908185ebd31e5681e"\
+                     "8568c32b033561053b9ce982a1603373cd528c1d5"\
+                     "cdace59035cb8f2a8b159cc7b5dbbf8309220737b35eba3ee91b"
+          }
+
+          proof_str =  "0x7f634e8853b40b96a13b3a26770b7e8c58051cd924"\
+                       "5ce9a8b863033bc200558751473e2eb8c5ec8aacdf40"\
+                       "28052e4a61a6ac285196996ec2ff6f86a7881a7f951c"
+
+          decode_val = [proof_str, clam_hash]
 
           expect(subject.decode(spec_did_token)).to eq(decode_val)
         end
 
         it "with invalid token" do
-          allow(subject).to receive(:base64_decode).with(spec_did_token).and_return("")
+          allow(subject).to receive(:base64_decode)
+            .with(spec_did_token)
+            .and_return("")
 
           expect do
             subject.decode(spec_did_token)
@@ -62,21 +70,24 @@ describe MagicAdmin::Resource::Token do
       context "#issuer_by_public_address" do
         it "return format" do
           public_address = subject.issuer_by_public_address("test_address")
-          expect(public_address).to eq("did:ethr:test_address")
+          expected = "did:ethr:test_address"
+          expect(public_address).to eq(expected)
         end
       end
 
       context "#issuer_by_did_token" do
         it "return format" do
           issuer = subject.issuer_by_did_token(spec_did_token)
-          expect(issuer).to eq("did:ethr:0x8580De53bA37B4205CdD0286D033592fCFfce0A6")
+          expected = "did:ethr:0x8580De53bA37B4205CdD0286D033592fCFfce0A6"
+          expect(issuer).to eq(expected)
         end
       end
 
       context "#public_address" do
         it "return format" do
           public_address = subject.public_address(spec_did_token)
-          expect(public_address).to eq("0x8580De53bA37B4205CdD0286D033592fCFfce0A6")
+          expected = "0x8580De53bA37B4205CdD0286D033592fCFfce0A6"
+          expect(public_address).to eq(expected)
         end
       end
     end
@@ -95,18 +106,20 @@ describe MagicAdmin::Resource::Token do
         end
 
         it "raise error when claim keys does not match with claim_fields " do
-          msg = "DID Token missing required fields: iat, ext, iss, sub, aud, nbf, tid"
+          fields = %w[iat ext iss sub aud nbf tid]
+          msg = "DID Token missing required fields: "
+          msg += fields.join(", ")
           expect do
-            subject.send(:validate_claim_fields!,{ invalid: nil })
-          end .to raise_error(MagicAdmin::DIDTokenError,msg)
+            subject.send(:validate_claim_fields!, { invalid: nil })
+          end .to raise_error(MagicAdmin::DIDTokenError, msg)
         end
       end
 
       context "#validate_public_address!" do
         it "return true when rec_address eq did_token public_address" do
           allow(subject).to receive(:public_address)
-                            .with(spec_did_token)
-                            .and_return("test_123")
+            .with(spec_did_token)
+            .and_return("test_123")
 
           expect(subject.send(:validate_public_address!,
                               "test_123",
@@ -128,7 +141,8 @@ describe MagicAdmin::Resource::Token do
           time = Time.now.to_i
           claim_ext = time + 100
 
-          expect(subject.send(:validate_claim_ext!, time,
+          expect(subject.send(:validate_claim_ext!,
+                              time,
                               claim_ext)).to be_truthy
         end
 
@@ -142,26 +156,26 @@ describe MagicAdmin::Resource::Token do
         end
       end
 
-      context "#validate_claim_nbf" do
-        it "return true when time is not less then apply_nbf_grace_period claim_nbf" do
+      context "#validate_claim_nbf using apply_nbf_grace_period claim_nbf" do
+        it "when time is not less then return true" do
           time = Time.now.to_i
           claim_nbf = double("claim_nbf")
           allow(subject).to receive(:apply_nbf_grace_period)
-                            .with(claim_nbf)
-                            .and_return(time - 100)
+            .with(claim_nbf)
+            .and_return(time - 100)
 
           expect(subject.send(:validate_claim_nbf!,
                               time,
                               claim_nbf)).to be_truthy
         end
 
-        it "raise error when time is less then apply_nbf_grace_period claim_nbf" do
+        it "when time is less then raise error" do
           time = Time.now.to_i
           claim_nbf = double("claim_nbf")
           msg = "Given DID token cannot be used at this time."
           allow(subject).to receive(:apply_nbf_grace_period)
-                            .with(claim_nbf)
-                            .and_return(time + 100)
+            .with(claim_nbf)
+            .and_return(time + 100)
 
           expect do
             subject.send(:validate_claim_nbf!, time, claim_nbf)

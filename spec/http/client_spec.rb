@@ -26,8 +26,8 @@ describe MagicAdmin::Http::Client do
     it "calling methods" do
       stub_request(:get, "https://api.magic.link//v1/admin/auth/user/get")
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
-      expect(subject).to receive(:backoff_retries).with(subject.retries,
-                                                        subject.backoff)
+      expect(subject).to receive(:backoff_retries)
+        .with(subject.retries, subject.backoff)
       expect(subject.http_response).to receive(:from_net_http)
 
       subject.call(:get, "/v1/admin/auth/user/get", {})
@@ -41,7 +41,11 @@ describe MagicAdmin::Http::Client do
           block = proc {}
           max_retries = 3
 
-          expect(block).to receive(:call).and_raise(StandardError).exactly(max_retries).times
+          expect(block).to receive(:call)
+            .and_raise(StandardError)
+            .exactly(max_retries)
+            .times
+
           expect do
             subject.send(:backoff_retries,
                          max_retries,
@@ -54,7 +58,8 @@ describe MagicAdmin::Http::Client do
 
     context "#use_ssl?" do
       it "return true when url schema is https" do
-        expect(subject.send(:use_ssl?, double("url", scheme: "https"))).to be_truthy
+        url_with_scheme = double("url", scheme: "https")
+        expect(subject.send(:use_ssl?, url_with_scheme)).to be_truthy
       end
     end
 
@@ -64,9 +69,8 @@ describe MagicAdmin::Http::Client do
         request = double("request")
         read_timeout = double("read_timeout")
 
-        expect(Net::HTTP).to receive(:start).with(url.host,
-                                                  url.port,
-                                                  use_ssl: true)
+        expect(Net::HTTP).to receive(:start)
+          .with(url.host, url.port, use_ssl: true)
 
         subject.send(:base_client, url, request, read_timeout)
       end
