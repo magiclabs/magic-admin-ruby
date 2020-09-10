@@ -22,8 +22,10 @@ Gem::Specification.new do |s|
   }
 
   s.add_dependency "eth", "~> 0.4"
-  s.add_development_dependency "rspec"
-  s.add_development_dependency "webmock"
+  s.add_development_dependency "byebug", "~> 11.0"
+  s.add_development_dependency "rspec", "~> 3.9"
+  s.add_development_dependency "rubocop", "~> 0.80"
+  s.add_development_dependency "webmock", "~> 3.8"
 
   s.files = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- spec/*`.split("\n")
