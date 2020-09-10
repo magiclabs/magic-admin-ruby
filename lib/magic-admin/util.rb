@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# MagicAdmin::Util module to access utility methods for header info
+# MagicAdmin::
 module MagicAdmin
+  # Util module to access utility methods for header info
   module Util
     # Description:
     #   Method provides you platform information hash

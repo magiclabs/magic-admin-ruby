@@ -2,7 +2,9 @@
 
 module MagicAdmin
   module Http
-    # Response Class
+    # Http Request and its methods are accessible
+    # on the Magic instance by the http_client.http_request attribute.
+    # It provides methods to interact with the http_request.
     class Response
       # attribute reader for response json_data
       attr_reader :json_data
@@ -15,6 +17,17 @@ module MagicAdmin
 
       # attribute reader for response message
       attr_reader :message
+
+      # Description:
+      #   Method parse Magic API response
+      #
+      # Arguments:
+      #   http_resp: Magic API response.
+      #   request: request object.
+      #
+      # Returns:
+      #   A HTTP Response object or raise an error
+      #
 
       def self.from_net_http(http_resp, request)
         resp = Response.new(http_resp)
@@ -31,12 +44,43 @@ module MagicAdmin
         raise error.new(message, error_options)
       end
 
+      # The constructor allows you to create HTTP Response Object
+      # when your application interacting with the Magic API
+      #
+      # Arguments:
+      #   http_resp: Magic API response.
+      #
+      # Returns:
+      #   A HTTP Response object that provides access to
+      #   all the supported resources.
+      #
+      # Examples:
+      #   Response.new(<http_resp>)
+      #
+
       def initialize(http_resp)
         @json_data = JSON.parse(http_resp.body, symbolize_names: true)
         @http_body = http_resp.body
         @http_status = http_resp.code.to_i
         @message = json_data[:message]
       end
+
+      # Description:
+      #   Method provides you error info hash
+      #
+      # Arguments:
+      #   request: request object.
+      #
+      # Returns:
+      #   hash with following keys.
+      #   http_status:
+      #   http_code:
+      #   http_response:
+      #   http_message:
+      #   http_error_code:
+      #   http_request_params:
+      #   http_request_header:
+      #   http_method:
 
       def error_opt(request)
         {

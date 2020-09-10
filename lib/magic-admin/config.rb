@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# MagicAdmin::Config module to access configuration info methods
+# MagicAdmin
 module MagicAdmin
+  # Config module to access configuration info methods
   module Config
     # Description:
     #   Method provides you platform information

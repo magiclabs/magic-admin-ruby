@@ -2,9 +2,24 @@
 
 module MagicAdmin
   module Http
-    # Request Class
+    # Http Request and its methods are accessible
+    # on the Magic instance by the http_client.http_request attribute.
+    # It provides methods to interact with the http_request.
     class Request
       class << self
+        # Description:
+        #   Method configure request object and provides request object
+        #   based on method argument.
+        #
+        # Arguments:
+        #   method: http method
+        #   url: get request url
+        #   options: a hash contains params and headers for request
+        #
+        # Returns:
+        #   A request object.
+        #
+
         def request(method, url, options)
           case method
           when :get, "get" then new.get(url, options)
@@ -17,6 +32,17 @@ module MagicAdmin
         end
       end
 
+      # Description:
+      #   Method configure request object and provides you get request object.
+      #
+      # Arguments:
+      #   url: get request url
+      #   options: a hash contains params and headers for request
+      #
+      # Returns:
+      #   A get request object.
+      #
+
       def get(url, options)
         headers = options[:headers] || {}
         params = options[:params] || {}
@@ -24,6 +50,17 @@ module MagicAdmin
         req = Net::HTTP::Get.new(url)
         request_with_headers(req, headers)
       end
+
+      # Description:
+      #   Method configure request object and provides you post request object.
+      #
+      # Arguments:
+      #   url: post request url
+      #   options: a hash contains params and headers for request
+      #
+      # Returns:
+      #   A post request object.
+      #
 
       def post(url, options)
         headers = options[:headers] || {}

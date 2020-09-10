@@ -57,7 +57,11 @@ class Magic
   #
   #   Magic.new
   #   Magic.new api_secret_key: "SECRET_KEY>"
-  #   Magic.new api_secret_key: "SECRET_KEY>", retries: 2, timeout: 2, backoff: 0.2
+  #   Magic.new api_secret_key: "SECRET_KEY>",
+  #             retries: 2,
+  #             timeout: 2,
+  #             backoff: 0.2
+  #
   #
 
   def initialize(api_secret_key: nil,
@@ -73,7 +77,8 @@ class Magic
   #   for interacting with the Magic API.
   #
   # Returns:
-  #   A User object that provides access to all the supported resources.
+  #   A User object that provides access to
+  #   all the supported resources.
 
   def user
     MagicAdmin::Resource::User.new(self)
@@ -84,7 +89,8 @@ class Magic
   #   for various utility methods of Token.
   #
   # Returns:
-  #   A Token object that provides access to all the supported resources.
+  #   A Token object that provides access to
+  #   all the supported resources.
 
   def token
     MagicAdmin::Resource::Token.new
@@ -100,14 +106,26 @@ class Magic
     @secret_key = api_secret_key || ENV["MAGIC_API_SECRET_KEY"]
     message = "Magic api secret key was not found."
 
-    raise MagicAdmin::MagicError.new(message) unless secret_key?
+    raise MagicAdmin::MagicError, message unless secret_key?
+  end
+
+  def configure_retries(retries)
+    retries || ENV["MAGIC_API_RETRIES"] || 3
+  end
+
+  def configure_timeout(timeout)
+    timeout || ENV["MAGIC_API_TIMEOUT"] || 5
+  end
+
+  def configure_backoff(backoff)
+    backoff || ENV["MAGIC_API_BACKOFF"] || 0.02
   end
 
   def http_client!(retries, timeout, backoff)
     @http_client = MagicAdmin::Http::Client
                    .new(MagicAdmin::Config.api_base,
-                        retries || ENV["MAGIC_API_RETRIES"] || 3,
-                        timeout || ENV["MAGIC_API_TIMEOUT"] || 5,
-                        backoff || ENV["MAGIC_API_BACKOFF"] || 0.02)
+                        configure_retries(retries),
+                        configure_timeout(timeout),
+                        configure_backoff(backoff))
   end
 end

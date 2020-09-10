@@ -2,7 +2,9 @@
 
 module MagicAdmin
   module Http
-    # Client Class
+    # Http Client and its methods are accessible
+    # on the Magic instance by the http_client attribute.
+    # It provides methods to interact with the http client.
     class Client
       # attribute reader for magic api max retries
       attr_reader :retries
@@ -28,11 +30,13 @@ module MagicAdmin
       # Arguments:
       #   api_base: api base url.
       #   req_retries: Total number of retries to allow.
-      #   req_timeout: A period of time the request is going to wait for a response.
+      #   req_timeout: A period of time the request is going
+      #                to wait for a response.
       #   req_backoff: A backoff factor to apply between retry attempts.
       #
       # Returns:
-      #   A Http Client object that provides access to all the supported resources.
+      #   A Http Client object that provides access to
+      #   all the supported resources.
       #
       # Examples:
       #   Client.new(<api_base>, <req_retries>, <req_timeout>, <req_backoff>)
@@ -56,7 +60,7 @@ module MagicAdmin
       #   options: a hash contains params and headers for request
       #
       # Returns:
-      #   response object
+      #   A response object
       #
 
       def call(method, path, options)
@@ -71,7 +75,8 @@ module MagicAdmin
       private
 
       # Description:
-      #   backoff_retries implementations of retries strategy with backoff factor
+      #   backoff_retries implementations of retries strategy
+      #   with backoff factor
       #
       # Arguments:
       #   max_retries: max retries count

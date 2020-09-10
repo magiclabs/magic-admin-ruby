@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe MagicAdmin::Resource::User do
-  let(:magic_client) { Magic.new(api_secret_key: spec_api_secret_key) }
+  let(:magic) { Magic.new(api_secret_key: spec_api_secret_key) }
   let(:public_address) do
     MagicAdmin::Resource::Token.new.public_address(spec_did_token)
   end
@@ -20,18 +20,18 @@ describe MagicAdmin::Resource::User do
     { "data" => {}, "error_code" => "", "message" => "", "status" => "ok" }
   end
 
-  subject { described_class.new(magic_client) }
+  subject { described_class.new(magic) }
 
   it "present attr readers" do
-    expect(subject).to respond_to(:magic_client)
+    expect(subject).to respond_to(:magic)
   end
 
   context "#metadata_by_issuer" do
     it "send request with options" do
       allow(MagicAdmin::Util).to receive(:headers)
-        .with(magic_client.secret_key)
+        .with(magic.secret_key)
         .and_return({})
-      expect(magic_client.http_client).to receive(:call)
+      expect(magic.http_client).to receive(:call)
         .with(:get,
               "/v1/admin/auth/user/get",
               {

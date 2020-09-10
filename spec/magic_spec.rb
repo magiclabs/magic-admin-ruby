@@ -1,12 +1,14 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 describe Magic do
-  let(:env_secret_key){ "<ENV_MAGIC_API_SECRET_KEY>" }
-  let(:agr_secret_key){ "<ARG_MAGIC_API_SECRET_KEY>" }
+  let(:env_secret_key) { "<ENV_MAGIC_API_SECRET_KEY>" }
+  let(:agr_secret_key) { "<ARG_MAGIC_API_SECRET_KEY>" }
 
   describe "magic object without arguments and environment variables" do
     it "should raise an error" do
-      expect{ Magic.new }.to raise_exception MagicAdmin::MagicError
+      expect { Magic.new }.to raise_exception MagicAdmin::MagicError
     end
   end
 
