@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.description = "The Magic Admin Ruby provides convenient ways " \
                   "for developers to interact with Magic API endpoints" \
                   "and an array of utilities to handle DID Token."
-  s.author = "Magic Admin"
+  s.author = "Magic Labs Inc"
   s.email = "arthur@fortmatic.com"
   s.homepage = "https://www.fortmatic.com"
   s.license = "MIT"
