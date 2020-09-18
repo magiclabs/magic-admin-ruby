@@ -33,12 +33,13 @@ Style/StringLiterals:
 
 Metrics/BlockLength:
   Exclude:
-    - "spec/**/*.rb"
-
-Layout/LineLength:
-  Exclude:
-    - "spec1/**/*.rb"
+    - "test/**/*.rb"
 
 Naming/FileName:
   Exclude:
     - "lib/magic-admin.rb"
+
+Style/Documentation:
+  Exclude:
+    - "lib/magic-admin/config.rb"
+    - "lib/magic-admin/util.rb"
