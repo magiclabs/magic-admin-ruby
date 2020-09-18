@@ -1,0 +1,7 @@
+--default-path test
+--require spec_helper
+--pattern '**{,/*/**}/*_test.rb'
+--warnings
+--color
+
+

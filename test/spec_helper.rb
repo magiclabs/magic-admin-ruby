@@ -7,6 +7,7 @@ require "magic-admin"
 require "webmock/rspec"
 
 RSpec.configure do |config|
+  #config.pattern = "**{,/*/**}/*_test.rb"
   # Add custom RSpec configuration here
 end
 
