@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-# MagicAdmin module provides methods/classes to interact with Magic Admin
 module MagicAdmin
-  # Config module to access configuration info methods
   module Config
     # Description:
     #   Method provides you platform information

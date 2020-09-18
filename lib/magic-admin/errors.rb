@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# MagicAdmin module provides methods/classes to interact with Magic Admin
 module MagicAdmin
   # MagicAdmin::MagicError class
   class MagicError < StandardError

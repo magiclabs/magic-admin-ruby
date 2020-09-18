@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-# MagicAdmin module provides methods/classes to interact with Magic Admin
 module MagicAdmin
-  # Resources module to access MagicAdmin Resources
   module Resource
     # The token resource and its methods are accessible
     # on the Magic instance by the Token attribute.

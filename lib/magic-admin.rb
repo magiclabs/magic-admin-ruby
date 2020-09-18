@@ -37,8 +37,8 @@ class Magic
   # and HTTP request strategy when your application interacting
   # with the Magic API.
   #
-  # it will automatically configuring required argument
-  # using following environment variables
+  # It will automatically configure required arguments
+  # using the following environment variables
   #   MAGIC_API_SECRET_KEY
   #   MAGIC_API_RETRIES
   #   MAGIC_API_TIMEOUT

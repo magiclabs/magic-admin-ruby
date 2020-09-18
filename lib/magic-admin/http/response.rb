@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-# MagicAdmin module provides methods/classes to interact with Magic Admin
 module MagicAdmin
-  # Http module for HTTP resources
   module Http
     # Http Request and its methods are accessible
     # on the Magic instance by the http_client.http_request attribute.
