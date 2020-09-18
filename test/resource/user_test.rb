@@ -86,12 +86,12 @@ describe MagicAdmin::Resource::User do
     end
   end
 
-  context "#logout_by_did_token" do
+  context "#logout_by_token" do
     it "return response" do
       url = "https://api.magic.link/v2/admin/auth/user/logout"
       stub_request(:post, url)
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
-      reps = subject.logout_by_did_token(spec_did_token)
+      reps = subject.logout_by_token(spec_did_token)
       expect(reps.http_status).to eq(200)
     end
   end

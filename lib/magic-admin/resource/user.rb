@@ -135,7 +135,7 @@ module MagicAdmin
       #   Magic Response
       #
 
-      def logout_by_did_token(did_token)
+      def logout_by_token(did_token)
         issuer = token.issuer_by_did_token(did_token)
         logout_by_issuer(issuer)
       end
