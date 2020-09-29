@@ -62,7 +62,6 @@ module MagicAdmin
     #   http_message:
     #   http_error_code:
     #   http_request_params:
-    #   http_request_params:
     #   http_request_data:
     #   http_method:
     # Returns:

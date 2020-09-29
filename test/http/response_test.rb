@@ -22,10 +22,9 @@ describe MagicAdmin::Http::Response do
   subject { described_class.new(http_resp) }
 
   it "present attr_reader" do
-    expect(subject).to respond_to(:json_data)
+    expect(subject).to respond_to(:data)
     expect(subject).to respond_to(:http_body)
-    expect(subject).to respond_to(:http_status)
-    expect(subject).to respond_to(:message)
+    expect(subject).to respond_to(:http_code)
   end
 
   context "#error_opt" do
@@ -49,7 +48,7 @@ describe MagicAdmin::Http::Response do
         reps = described_class.from_net_http(http_resp, request)
         expect(reps).to be_instance_of(MagicAdmin::Http::Response)
 
-        expect(reps.http_status).to eq(200)
+        expect(reps.http_code).to eq(200)
       end
 
       context "with invalid request" do

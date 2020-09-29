@@ -48,7 +48,7 @@ module MagicAdmin
           proof = token_array[0]
           claim = JSON.parse(token_array[1])
           validate_claim_fields!(claim)
-        rescue JSON::ParserError
+        rescue JSON::ParserError, ArgumentError
           raise DIDTokenError, "DID Token is malformed"
         end
         [proof, claim]

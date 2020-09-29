@@ -6,17 +6,14 @@ module MagicAdmin
     # on the Magic instance by the http_client.http_request attribute.
     # It provides methods to interact with the http_request.
     class Response
-      # attribute reader for response json_data
-      attr_reader :json_data
+      # attribute reader for response data
+      attr_reader :data
 
       # attribute reader for response body
       attr_reader :http_body
 
-      # attribute reader for response status
-      attr_reader :http_status
-
-      # attribute reader for response message
-      attr_reader :message
+      # attribute reader for response http_code
+      attr_reader :http_code
 
       # Description:
       #   Method parse Magic API response
@@ -32,14 +29,14 @@ module MagicAdmin
       def self.from_net_http(http_resp, request)
         resp = Response.new(http_resp)
         error = case http_resp
-                when Net::HTTPBadRequest then BadRequestError
                 when Net::HTTPUnauthorized then UnauthorizedError
+                when Net::HTTPBadRequest then BadRequestError
                 when Net::HTTPForbidden then ForbiddenError
                 when Net::HTTPTooManyRequests then TooManyRequestsError
                 end
         return resp unless error
 
-        message = resp.message
+        message = resp.data[:message]
         error_options = resp.error_opt(request)
         raise error.new(message, error_options)
       end
@@ -59,10 +56,9 @@ module MagicAdmin
       #
 
       def initialize(http_resp)
-        @json_data = JSON.parse(http_resp.body, symbolize_names: true)
+        @data = JSON.parse(http_resp.body, symbolize_names: true)[:data]
         @http_body = http_resp.body
-        @http_status = http_resp.code.to_i
-        @message = json_data[:message]
+        @http_code = http_resp.code.to_i
       end
 
       # Description:
@@ -84,11 +80,11 @@ module MagicAdmin
 
       def error_opt(request)
         {
-          http_status: http_status,
-          http_code: nil,
+          http_status: data[:status],
+          http_code: http_code,
           http_response: http_body,
-          http_message: message,
-          http_error_code: nil,
+          http_message: data[:message],
+          http_error_code: data[:error_code],
           http_request_params: request.body,
           http_request_header: request.to_hash,
           http_method: request.method

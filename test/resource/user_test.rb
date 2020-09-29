@@ -49,19 +49,19 @@ describe MagicAdmin::Resource::User do
       stub_request(:get, url)
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
       reps = subject.metadata_by_public_address(public_address)
-      expect(reps.http_status).to eq(200)
+      expect(reps.http_code).to eq(200)
     end
   end
 
-  context "#metadata_by_did_token" do
+  context "#metadata_by_token" do
     it "return response" do
       url = "https://api.magic.link/v1/admin/auth/user/get?issuer="
       url += issuer
       stub_request(:get, url)
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
-      reps = subject.metadata_by_did_token(spec_did_token)
+      reps = subject.metadata_by_token(spec_did_token)
 
-      expect(reps.http_status).to eq(200)
+      expect(reps.http_code).to eq(200)
     end
   end
 
@@ -72,7 +72,7 @@ describe MagicAdmin::Resource::User do
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
       reps = subject.logout_by_issuer(issuer)
 
-      expect(reps.http_status).to eq(200)
+      expect(reps.http_code).to eq(200)
     end
   end
 
@@ -82,7 +82,7 @@ describe MagicAdmin::Resource::User do
       stub_request(:post, url)
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
       reps = subject.logout_by_public_address(public_address)
-      expect(reps.http_status).to eq(200)
+      expect(reps.http_code).to eq(200)
     end
   end
 
@@ -92,7 +92,7 @@ describe MagicAdmin::Resource::User do
       stub_request(:post, url)
         .to_return(status: 200, body: stub_response_body.to_json, headers: {})
       reps = subject.logout_by_token(spec_did_token)
-      expect(reps.http_status).to eq(200)
+      expect(reps.http_code).to eq(200)
     end
   end
 end

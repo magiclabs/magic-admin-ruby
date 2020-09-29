@@ -77,7 +77,7 @@ module MagicAdmin
       #   Metadata information about the user
       #
 
-      def metadata_by_did_token(did_token)
+      def metadata_by_token(did_token)
         issuer = token.issuer_by_did_token(did_token)
         metadata_by_issuer(issuer)
       end

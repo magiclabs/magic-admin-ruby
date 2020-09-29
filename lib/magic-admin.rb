@@ -27,6 +27,10 @@ require "magic-admin/resource/user"
 
 # Magic Class to access resources
 class Magic
+  RETRIES = 3
+  TIMEOUT = 5
+  BACKOFF = 0.02
+
   # attribute reader for magic api secret key
   attr_reader :secret_key
 
@@ -110,15 +114,15 @@ class Magic
   end
 
   def configure_retries(retries)
-    retries || ENV["MAGIC_API_RETRIES"] || 3
+    retries || ENV["MAGIC_API_RETRIES"] || RETRIES
   end
 
   def configure_timeout(timeout)
-    timeout || ENV["MAGIC_API_TIMEOUT"] || 5
+    timeout || ENV["MAGIC_API_TIMEOUT"] || TIMEOUT
   end
 
   def configure_backoff(backoff)
-    backoff || ENV["MAGIC_API_BACKOFF"] || 0.02
+    backoff || ENV["MAGIC_API_BACKOFF"] || BACKOFF
   end
 
   def http_client!(retries, timeout, backoff)
