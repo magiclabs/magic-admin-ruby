@@ -3,6 +3,9 @@
 require "bundler/setup"
 Bundler.setup
 
+require 'simplecov'
+SimpleCov.start
+
 require "magic-admin"
 require "webmock/rspec"
 
