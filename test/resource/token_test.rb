@@ -34,21 +34,21 @@ describe MagicAdmin::Resource::Token do
       context "#decode" do
         it "with valid token" do
           clam_hash = {
-            "iat" => 1_599_149_991,
-            "ext" => 1_599_150_891,
-            "iss" => "did:ethr:0x8580De53bA37B4205CdD0286D033592fCFfce0A6",
-            "sub" => "wSDilvMIsxZvqP6EwIXyde-n7gjlq58TG-OnuTczNrk=",
-            "aud" => "did:magic:79f22edb-dace-4019-ae7a-ece6ed0a01a4",
-            "nbf" => 1_599_149_991,
-            "tid" => "35a27161-14a2-42c7-9f9b-ebaa77048ccd",
-            "add" => "0xa5f77a05a1f40f1d07bc908185ebd31e5681e"\
-                     "8568c32b033561053b9ce982a1603373cd528c1d5"\
-                     "cdace59035cb8f2a8b159cc7b5dbbf8309220737b35eba3ee91b"
+            "iat" => 1_234_512_345,
+            "ext" => 1_234_512_345,
+            "iss" => "did:ethr:0xtest0000test0000test0000test0000test0000",
+            "sub" => "00abcdefghijklmnopqrstuvwxyz123456789000000=",
+            "aud" => "did:magic:testtest-test-test-test-testtesttest",
+            "nbf" => 1_234_512_345,
+            "tid" => "testtest-test-test-test-testtesttest",
+            "add" => "0x00test0000test0000test0000test0000test0000"\
+                     "test0000test0000test0000test0000test0000test"\
+                     "0000test0000test0000test0000test0000test0000"
           }
 
-          proof_str =  "0x7f634e8853b40b96a13b3a26770b7e8c58051cd924"\
-                       "5ce9a8b863033bc200558751473e2eb8c5ec8aacdf40"\
-                       "28052e4a61a6ac285196996ec2ff6f86a7881a7f951c"
+          proof_str = "0xtest0000test0000test0000test0000test0000"\
+                      "test0000test0000test0000test0000test0000test"\
+                      "0000test0000test0000test0000test0000test000000"
 
           decode_val = [proof_str, clam_hash]
 
@@ -78,7 +78,7 @@ describe MagicAdmin::Resource::Token do
       context "#issuer_by_did_token" do
         it "return format" do
           issuer = subject.issuer_by_did_token(spec_did_token)
-          expected = "did:ethr:0x8580De53bA37B4205CdD0286D033592fCFfce0A6"
+          expected = "did:ethr:0xtest0000test0000test0000test0000test0000"
           expect(issuer).to eq(expected)
         end
       end
@@ -86,7 +86,7 @@ describe MagicAdmin::Resource::Token do
       context "#public_address" do
         it "return format" do
           public_address = subject.public_address(spec_did_token)
-          expected = "0x8580De53bA37B4205CdD0286D033592fCFfce0A6"
+          expected = "0xtest0000test0000test0000test0000test0000"
           expect(public_address).to eq(expected)
         end
       end
