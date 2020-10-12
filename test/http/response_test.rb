@@ -36,7 +36,6 @@ describe MagicAdmin::Http::Response do
         :http_message,
         :http_error_code,
         :http_request_params,
-        :http_request_header,
         :http_method
       )
     end

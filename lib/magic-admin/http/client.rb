@@ -121,9 +121,13 @@ module MagicAdmin
       # Returns:
       #   response
       def base_client(url, request, read_timeout)
-        Net::HTTP.start(url.host, url.port, use_ssl: use_ssl?(url)) do |http|
-          http.read_timeout = read_timeout
-          http.request(request)
+        begin
+          Net::HTTP.start(url.host, url.port, use_ssl: use_ssl?(url)) do |http|
+            http.read_timeout = read_timeout
+            http.request(request)
+          end
+        rescue SocketError => e
+          raise APIConnectionError.new(e.message)
         end
       end
 

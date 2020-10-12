@@ -26,9 +26,7 @@ module MagicAdmin
           when :get, "get" then new.get(url, options)
           when :post, "post" then new.post(url, options)
           else
-            message = "Request method not supported."
-            opt = { http_method: method }
-            raise APIError.new(message, opt)
+            raise APIError.new("Request method not supported.", { http_method: method })
           end
         end
       end

@@ -41,9 +41,7 @@ module MagicAdmin
                 end
         return resp unless error
 
-        message = resp.data[:message]
-        error_options = resp.error_opt(request)
-        raise error.new(message, error_options)
+        raise error.new(resp.data[:message], resp.error_opt(request))
       end
 
       # The constructor allows you to create HTTP Response Object
@@ -59,8 +57,8 @@ module MagicAdmin
       # Examples:
       #   Response.new(<http_resp>)
       def initialize(http_resp)
-        @data = JSON.parse(http_resp.body, symbolize_names: true)[:data]
         @content = http_resp.body
+        @data = JSON.parse(http_resp.body, symbolize_names: true)
         @status_code = http_resp.code.to_i
       end
 
@@ -88,7 +86,6 @@ module MagicAdmin
           http_message: data[:message],
           http_error_code: data[:error_code],
           http_request_params: request.body,
-          http_request_header: request.to_hash,
           http_method: request.method
         }
       end
