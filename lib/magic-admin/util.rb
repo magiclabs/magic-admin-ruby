@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 module MagicAdmin
+
   module Util
+
     # Description:
     #   Method provides you platform information hash
     #
     # Returns:
     #   hash with following keys.
-    #   platform:
-    #   language:
-    #   language_version:
-    #   user_name:
-    #
-
+    #       platform:
+    #       language:
+    #       language_version:
+    #       user_name:
     def self.platform_info
       {
         platform: Config.platform,
@@ -27,11 +27,9 @@ module MagicAdmin
     #
     # Returns:
     #   hash with following keys.
-    #   sdk_version:
-    #   publisher:
-    #   platform:
-    #
-
+    #       sdk_version:
+    #       publisher:
+    #       platform:
     def self.user_agent
       {
         sdk_version: MagicAdmin::VERSION,
@@ -48,11 +46,9 @@ module MagicAdmin
     #
     # Returns:
     #   hash with following keys.
-    #   content-type:
-    #   X-Magic-Secret-Key:
-    #   User-Agent:
-    #
-
+    #       content-type:
+    #       X-Magic-Secret-Key:
+    #       User-Agent:
     def self.headers(secret_key)
       {
         "content-type": "application/json",
@@ -60,5 +56,6 @@ module MagicAdmin
         "User-Agent": Util.user_agent
       }
     end
+
   end
 end

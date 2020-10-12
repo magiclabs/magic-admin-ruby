@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 module MagicAdmin
+
   module Http
+
     # Http Request and its methods are accessible
     # on the Magic instance by the http_client.http_request attribute.
     # It provides methods to interact with the http_request.
     class Request
+
       class << self
         # Description:
         #   Method configure request object and provides request object
@@ -18,8 +21,6 @@ module MagicAdmin
         #
         # Returns:
         #   A request object.
-        #
-
         def request(method, url, options)
           case method
           when :get, "get" then new.get(url, options)
@@ -41,8 +42,6 @@ module MagicAdmin
       #
       # Returns:
       #   A get request object.
-      #
-
       def get(url, options)
         headers = options[:headers] || {}
         params = options[:params] || {}
@@ -60,8 +59,6 @@ module MagicAdmin
       #
       # Returns:
       #   A post request object.
-      #
-
       def post(url, options)
         headers = options[:headers] || {}
         params = options[:params] || {}
@@ -88,6 +85,7 @@ module MagicAdmin
         req.body = params.to_json
         req
       end
+
     end
   end
 end
