@@ -1,0 +1,45 @@
+Layout/CaseIndentation:
+  EnforcedStyle: end
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Metrics/MethodLength:
+  Max: 15
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Metrics/BlockLength:
+  Exclude:
+    - "test/**/*.rb"
+
+Naming/FileName:
+  Exclude:
+    - "lib/magic-admin.rb"
+
+Style/Documentation:
+  Exclude:
+    - "lib/magic-admin/config.rb"
+    - "lib/magic-admin/util.rb"
