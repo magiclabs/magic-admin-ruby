@@ -46,7 +46,7 @@ module MagicAdmin
       def initialize(api_base, req_retries, req_timeout, req_backoff)
         @retries = req_retries.to_i
         @backoff = req_backoff.to_f
-        @timeout = req_timeout.to_i
+        @timeout = req_timeout.to_f
         @base_url = api_base
         @http_request = Request
         @http_response = Response
