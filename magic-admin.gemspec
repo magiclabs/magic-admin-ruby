@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
                   "for developers to interact with Magic API endpoints" \
                   "and an array of utilities to handle DID Token."
   s.author = "Magic Labs Inc"
-  s.email = "arthur@fortmatic.com"
-  s.homepage = "https://www.fortmatic.com"
+  s.email = "support@magic.link"
+  s.homepage = "https://docs.magic.link/admin-sdk/ruby"
   s.license = "MIT"
 
   s.metadata = {
