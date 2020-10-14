@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module MagicAdmin
+
   module Config
+
     # Description:
     #   Method provides you platform information
     #
     # Returns:
     #   user platform information
-    #
-
     def self.platform
       RUBY_PLATFORM
     end
@@ -18,8 +18,6 @@ module MagicAdmin
     #
     # Returns:
     #   sdk programming language
-    #
-
     def self.language
       "ruby"
     end
@@ -29,8 +27,6 @@ module MagicAdmin
     #
     # Returns:
     #   sdk programming language version
-    #
-
     def self.language_version
       RUBY_VERSION
     end
@@ -40,8 +36,6 @@ module MagicAdmin
     #
     # Returns:
     #   installation machine user_name
-    #
-
     def self.user_name
       Etc.getpwnam(Etc.getlogin).gecos.split(/,/).first
     end
@@ -51,8 +45,6 @@ module MagicAdmin
     #
     # Returns:
     #   sdk publisher name
-    #
-
     def self.publisher
       "MagicLabs"
     end
@@ -62,8 +54,6 @@ module MagicAdmin
     #
     # Returns:
     #   api base url
-    #
-
     def self.api_base
       "https://api.magic.link"
     end
@@ -73,10 +63,9 @@ module MagicAdmin
     #
     # Returns:
     #   nbf grace period
-    #
-
     def self.nbf_grace_period
       300
     end
+
   end
 end

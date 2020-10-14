@@ -67,25 +67,25 @@ describe MagicAdmin::Resource::Token do
         end
       end
 
-      context "#issuer_by_public_address" do
+      context "#construct_issuer_with_public_address" do
         it "return format" do
-          public_address = subject.issuer_by_public_address("test_address")
+          public_address = subject.construct_issuer_with_public_address("test_address")
           expected = "did:ethr:test_address"
           expect(public_address).to eq(expected)
         end
       end
 
-      context "#issuer_by_did_token" do
+      context "#get_issuer" do
         it "return format" do
-          issuer = subject.issuer_by_did_token(spec_did_token)
+          issuer = subject.get_issuer(spec_did_token)
           expected = "did:ethr:0xtest0000test0000test0000test0000test0000"
           expect(issuer).to eq(expected)
         end
       end
 
-      context "#public_address" do
+      context "#get_public_address" do
         it "return format" do
-          public_address = subject.public_address(spec_did_token)
+          public_address = subject.get_public_address(spec_did_token)
           expected = "0xtest0000test0000test0000test0000test0000"
           expect(public_address).to eq(expected)
         end
@@ -117,7 +117,7 @@ describe MagicAdmin::Resource::Token do
 
       context "#validate_public_address!" do
         it "return true when rec_address eq did_token public_address" do
-          allow(subject).to receive(:public_address)
+          allow(subject).to receive(:get_public_address)
             .with(spec_did_token)
             .and_return("test_123")
 

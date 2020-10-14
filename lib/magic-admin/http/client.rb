@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 module MagicAdmin
+
   module Http
+
     # Http Client and its methods are accessible
     # on the Magic instance by the http_client attribute.
     # It provides methods to interact with the http client.
     class Client
+
       # attribute reader for magic api max retries
       attr_reader :retries
 
@@ -40,12 +43,10 @@ module MagicAdmin
       #
       # Examples:
       #   Client.new(<api_base>, <req_retries>, <req_timeout>, <req_backoff>)
-      #
-
       def initialize(api_base, req_retries, req_timeout, req_backoff)
         @retries = req_retries.to_i
         @backoff = req_backoff.to_f
-        @timeout = req_timeout.to_i
+        @timeout = req_timeout.to_f
         @base_url = api_base
         @http_request = Request
         @http_response = Response
@@ -61,8 +62,6 @@ module MagicAdmin
       #
       # Returns:
       #   A response object
-      #
-
       def call(method, path, options)
         url = URI("#{base_url}#{path}")
         req = http_request.request(method, url, options)
@@ -85,8 +84,6 @@ module MagicAdmin
       #
       # Returns:
       #   it returns, block return object
-      #
-
       def backoff_retries(max_retries, backoff_factor, &block)
         attempts = 0
         begin
@@ -109,8 +106,6 @@ module MagicAdmin
       #
       # Returns:
       #   boolean value
-      #
-
       def use_ssl?(url)
         url.scheme == "https"
       end
@@ -125,14 +120,17 @@ module MagicAdmin
       #
       # Returns:
       #   response
-      #
-
       def base_client(url, request, read_timeout)
-        Net::HTTP.start(url.host, url.port, use_ssl: use_ssl?(url)) do |http|
-          http.read_timeout = read_timeout
-          http.request(request)
+        begin
+          Net::HTTP.start(url.host, url.port, use_ssl: use_ssl?(url)) do |http|
+            http.read_timeout = read_timeout
+            http.request(request)
+          end
+        rescue SocketError => e
+          raise APIConnectionError.new(e.message)
         end
       end
+
     end
   end
 end

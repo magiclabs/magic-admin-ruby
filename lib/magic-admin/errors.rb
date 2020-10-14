@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 module MagicAdmin
+
   # MagicAdmin::MagicError class
   class MagicError < StandardError
+
     # attribute reader for error message
     attr_reader :message
 
@@ -11,7 +13,6 @@ module MagicAdmin
     #
     # Arguments:
     #   message: error message.
-
     def initialize(message)
       @message = message
     end
@@ -20,11 +21,8 @@ module MagicAdmin
   # MagicAdmin::MagicError class
   class DIDTokenError < MagicError; end
 
-  # MagicAdmin::MagicError class
-  class APIConnectionError < MagicError; end
-
-  # HTTPRequestError Class
-  class HTTPRequestError < MagicError
+  # RequestError Class
+  class RequestError < MagicError
     # attribute reader for http response status
     attr_reader :http_status
 
@@ -55,18 +53,17 @@ module MagicAdmin
     #
     # Arguments:
     #   message: request error message.
-    #   opt: hash of request and response info of following keys.
-    #   http_status:
-    #   http_code:
-    #   http_response:
-    #   http_message:
-    #   http_error_code:
-    #   http_request_params:
-    #   http_request_data:
-    #   http_method:
+    #   opt: hash of request and response info of following keys:
+    #     http_status
+    #     http_code
+    #     http_response
+    #     http_message
+    #     http_error_code
+    #     http_request_params
+    #     http_request_data
+    #     http_method
     # Returns:
     #   A Error object that provides additional error info for magic api call.
-
     def initialize(message, opt = {})
       super(message)
       @http_status = opt[:http_status]
@@ -80,21 +77,22 @@ module MagicAdmin
     end
   end
 
-  # MagicAdmin::TooManyRequestsError class
-  class TooManyRequestsError < HTTPRequestError; end
+  # MagicAdmin::MagicError class
+  class APIConnectionError < RequestError; end
+
+  # MagicAdmin::RateLimitingError class
+  class RateLimitingError < RequestError; end
 
   # MagicAdmin::BadRequestError class
-  class BadRequestError < HTTPRequestError; end
+  class BadRequestError < RequestError; end
 
-  # MagicAdmin::UnauthorizedError class
-  class UnauthorizedError < HTTPRequestError; end
+  # MagicAdmin::AuthenticationError class
+  class AuthenticationError < RequestError; end
 
   # MagicAdmin::ForbiddenError class
-  class ForbiddenError < HTTPRequestError; end
-
-  # MagicAdmin::RequestTimeoutError class
-  class RequestTimeoutError < HTTPRequestError; end
+  class ForbiddenError < RequestError; end
 
   # MagicAdmin::APIError class
-  class APIError < HTTPRequestError; end
+  class APIError < RequestError; end
+
 end

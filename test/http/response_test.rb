@@ -23,8 +23,8 @@ describe MagicAdmin::Http::Response do
 
   it "present attr_reader" do
     expect(subject).to respond_to(:data)
-    expect(subject).to respond_to(:http_body)
-    expect(subject).to respond_to(:http_code)
+    expect(subject).to respond_to(:content)
+    expect(subject).to respond_to(:status_code)
   end
 
   context "#error_opt" do
@@ -36,7 +36,6 @@ describe MagicAdmin::Http::Response do
         :http_message,
         :http_error_code,
         :http_request_params,
-        :http_request_header,
         :http_method
       )
     end
@@ -48,7 +47,7 @@ describe MagicAdmin::Http::Response do
         reps = described_class.from_net_http(http_resp, request)
         expect(reps).to be_instance_of(MagicAdmin::Http::Response)
 
-        expect(reps.http_code).to eq(200)
+        expect(reps.status_code).to eq(200)
       end
 
       context "with invalid request" do
@@ -83,7 +82,7 @@ describe MagicAdmin::Http::Response do
 
           expect do
             described_class.from_net_http(error_resp, request)
-          end .to raise_error(MagicAdmin::UnauthorizedError)
+          end .to raise_error(MagicAdmin::AuthenticationError)
         end
 
         it "raise error HTTPForbidden" do
@@ -108,7 +107,7 @@ describe MagicAdmin::Http::Response do
             Net::HTTPTooManyRequests,
             body: stub_response_body.to_json,
             code: 429,
-            message: "HTTP Many  Request Error"
+            message: "HTTP Many Request Error"
           )
 
           allow(Net::HTTPTooManyRequests).to receive(:===)
@@ -117,7 +116,75 @@ describe MagicAdmin::Http::Response do
 
           expect do
             described_class.from_net_http(error_resp, request)
-          end .to raise_error(MagicAdmin::TooManyRequestsError)
+          end .to raise_error(MagicAdmin::RateLimitingError)
+        end
+
+        it "raise error HTTPServerError" do
+          error_resp = instance_double(
+            Net::HTTPServerError,
+            body: stub_response_body.to_json,
+            code: 500,
+            message: "HTTP Internal Server Error"
+          )
+
+          allow(Net::HTTPServerError).to receive(:===)
+            .with(error_resp)
+            .and_return(true)
+
+          expect do
+            described_class.from_net_http(error_resp, request)
+          end .to raise_error(MagicAdmin::APIError)
+        end
+
+        it "raise error HTTPGatewayTimeout" do
+          error_resp = instance_double(
+            Net::HTTPGatewayTimeout,
+            body: stub_response_body.to_json,
+            code: 504,
+            message: "HTTP Gateway Timeoutr"
+          )
+
+          allow(Net::HTTPGatewayTimeout).to receive(:===)
+            .with(error_resp)
+            .and_return(true)
+
+          expect do
+            described_class.from_net_http(error_resp, request)
+          end .to raise_error(MagicAdmin::APIError)
+        end
+
+        it "raise error HTTPServiceUnavailable" do
+          error_resp = instance_double(
+            Net::HTTPServiceUnavailable,
+            body: stub_response_body.to_json,
+            code: 503,
+            message: "HTTP Service Unavailable"
+          )
+
+          allow(Net::HTTPServiceUnavailable).to receive(:===)
+            .with(error_resp)
+            .and_return(true)
+
+          expect do
+            described_class.from_net_http(error_resp, request)
+          end .to raise_error(MagicAdmin::APIError)
+        end
+
+        it "raise error HTTPBadGateway" do
+          error_resp = instance_double(
+            Net::HTTPBadGateway,
+            body: stub_response_body.to_json,
+            code: 502,
+            message: "HTTP Bad Gateway"
+          )
+
+          allow(Net::HTTPBadGateway).to receive(:===)
+            .with(error_resp)
+            .and_return(true)
+
+          expect do
+            described_class.from_net_http(error_resp, request)
+          end .to raise_error(MagicAdmin::APIError)
         end
       end
     end

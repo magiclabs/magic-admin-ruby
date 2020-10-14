@@ -1,19 +1,22 @@
 # frozen_string_literal: true
 
 module MagicAdmin
+
   module Http
+
     # Http Request and its methods are accessible
     # on the Magic instance by the http_client.http_request attribute.
     # It provides methods to interact with the http_request.
     class Response
+
       # attribute reader for response data
       attr_reader :data
 
       # attribute reader for response body
-      attr_reader :http_body
+      attr_reader :content
 
-      # attribute reader for response http_code
-      attr_reader :http_code
+      # attribute reader for response status_code
+      attr_reader :status_code
 
       # Description:
       #   Method parse Magic API response
@@ -24,21 +27,21 @@ module MagicAdmin
       #
       # Returns:
       #   A HTTP Response object or raise an error
-      #
-
       def self.from_net_http(http_resp, request)
         resp = Response.new(http_resp)
         error = case http_resp
-                when Net::HTTPUnauthorized then UnauthorizedError
+                when Net::HTTPUnauthorized then AuthenticationError
                 when Net::HTTPBadRequest then BadRequestError
                 when Net::HTTPForbidden then ForbiddenError
-                when Net::HTTPTooManyRequests then TooManyRequestsError
+                when Net::HTTPTooManyRequests then RateLimitingError
+                when Net::HTTPServerError then APIError
+                when Net::HTTPGatewayTimeout then APIError
+                when Net::HTTPServiceUnavailable then APIError
+                when Net::HTTPBadGateway then APIError
                 end
         return resp unless error
 
-        message = resp.data[:message]
-        error_options = resp.error_opt(request)
-        raise error.new(message, error_options)
+        raise error.new(resp.data[:message], resp.error_opt(request))
       end
 
       # The constructor allows you to create HTTP Response Object
@@ -53,12 +56,10 @@ module MagicAdmin
       #
       # Examples:
       #   Response.new(<http_resp>)
-      #
-
       def initialize(http_resp)
-        @data = JSON.parse(http_resp.body, symbolize_names: true)[:data]
-        @http_body = http_resp.body
-        @http_code = http_resp.code.to_i
+        @content = http_resp.body
+        @data = JSON.parse(http_resp.body, symbolize_names: true)
+        @status_code = http_resp.code.to_i
       end
 
       # Description:
@@ -70,26 +71,25 @@ module MagicAdmin
       # Returns:
       #   hash with following keys.
       #   http_status:
-      #   http_code:
+      #   status_code:
       #   http_response:
       #   http_message:
       #   http_error_code:
       #   http_request_params:
       #   http_request_header:
       #   http_method:
-
       def error_opt(request)
         {
           http_status: data[:status],
-          http_code: http_code,
-          http_response: http_body,
+          http_code: status_code,
+          http_response: content,
           http_message: data[:message],
           http_error_code: data[:error_code],
           http_request_params: request.body,
-          http_request_header: request.to_hash,
           http_method: request.method
         }
       end
+
     end
   end
 end

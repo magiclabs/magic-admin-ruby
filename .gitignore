@@ -3,4 +3,5 @@ Gemfile.lock
 .rvmrc
 .ruby-version
 .byebug_history
+coverage/*
 
