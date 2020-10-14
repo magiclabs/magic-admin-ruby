@@ -1,5 +1,16 @@
-# magic-admin-ruby
-The Magic Admin Ruby provides convenient ways for developers to interact with Magic API endpoints and an array of utilities to handle DID Token.
+# Magic Admin Ruby SDK
+
+The Magic Admin Ruby SDK provides convenient ways for developers to interact with Magic API endpoints and an array of utilities to handle [DID Token](https://docs.magic.link/tutorials/decentralized-id).
+
+## Table of Contents
+
+* [Documentation](#documentation)
+* [Quick Start](#quick-start)
+* [Changelog](#changelog)
+* [License](#license)
+
+## Documentation
+See the [Magic doc](https://docs.magic.link/admin-sdk/ruby)!
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -45,7 +56,7 @@ Optionally if you would like, you can load the API secret key from the environme
 magic = Magic.new
 ```
 
-**Note**: The argument passed to the `Magic::Client` object takes precedence over the environment variable.
+**Note**: The arguments passed to the `Magic` object takes precedence over the environment variables.
 
 ### Configure Network Strategy
 The `Magic` object also takes in `retries`, `timeout` and `backoff` as optional arguments at the object instantiation time so you can override those values for your application setup.
