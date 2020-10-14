@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.summary = "Ruby bindings for the Magic Admin API"
 
   s.description = "The Magic Admin Ruby provides convenient ways " \
-                  "for developers to interact with Magic API endpoints" \
+                  "for developers to interact with Magic API endpoints " \
                   "and an array of utilities to handle DID Token."
   s.author = "Magic Labs Inc."
   s.email = "support@magic.link"
