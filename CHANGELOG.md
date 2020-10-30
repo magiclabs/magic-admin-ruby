@@ -2,7 +2,7 @@
 
 #### Fixed
 
-- <PR-#5>: https://github.com/magiclabs/magic-admin-ruby/issues/5
+- <PR-#ISSUE> ...
 
 #### Changed
 
