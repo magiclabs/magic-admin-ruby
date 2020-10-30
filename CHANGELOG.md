@@ -15,3 +15,9 @@
 #### Changed
 
 - <PR-#ISSUE> ...
+
+## `0.1.2` - 10/30/2020
+
+#### Changed
+
+- <PR-#5>: https://github.com/magiclabs/magic-admin-ruby/issues/5
