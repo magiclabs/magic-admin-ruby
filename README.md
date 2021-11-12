@@ -1,6 +1,6 @@
 # Magic Admin Ruby SDK
 
-The Magic Admin Ruby SDK provides convenient ways for developers to interact with Magic API endpoints and an array of utilities to handle [DID Token](https://docs.magic.link/tutorials/decentralized-id).
+The Magic Admin Ruby SDK provides convenient ways for developers to interact with Magic API endpoints and an array of utilities to handle [DID Token](https://magic.link/docs/introduction/decentralized-id).
 
 ## Table of Contents
 
@@ -10,7 +10,7 @@ The Magic Admin Ruby SDK provides convenient ways for developers to interact wit
 * [License](#license)
 
 ## Documentation
-See the [Magic doc](https://docs.magic.link/admin-sdk/ruby)!
+See the [Magic doc](https://magic.link/docs/api-reference/server-side-sdks/ruby)!
 
 ## Installation
 Add this line to your application's Gemfile:
