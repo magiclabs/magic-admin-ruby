@@ -2,7 +2,9 @@
 
 #### Fixed
 
-- <PR-#ISSUE> ...
+- <PR-#12> https://github.com/magiclabs/magic-admin-ruby/issues/7
+- <PR-#12> https://github.com/magiclabs/magic-admin-ruby/issues/8
+- <PR-#12> https://github.com/magiclabs/magic-admin-ruby/issues/11
 
 #### Changed
 
