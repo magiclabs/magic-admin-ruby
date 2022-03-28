@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.metadata = {
   }
 
-  s.add_dependency "eth", "~> 0.4"
+  s.add_dependency "eth", "~> 0.5"
   s.add_development_dependency "byebug", "~> 11.0"
   s.add_development_dependency "rspec", "~> 3.9"
   s.add_development_dependency "rubocop", "~> 0.80"

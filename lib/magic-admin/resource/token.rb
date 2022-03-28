@@ -20,7 +20,7 @@ module MagicAdmin
       def validate(did_token)
         time = Time.now.to_i
         proof, claim = decode(did_token)
-        rec_address = rec_pub_address(claim, proof)
+        rec_address = rec_pub_address(claim, proof).to_s
 
         validate_public_address!(rec_address, did_token)
         validate_claim_fields!(claim)
@@ -97,11 +97,11 @@ module MagicAdmin
       end
 
       def personal_recover(claim, proof)
-        Eth::Key.personal_recover(JSON.dump(claim), proof)
+        Eth::Signature.personal_recover(JSON.dump(claim), proof)
       end
 
       def rec_pub_address(claim, proof)
-        Eth::Utils.public_key_to_address personal_recover(claim, proof)
+        Eth::Util.public_key_to_address personal_recover(claim, proof)
       end
 
       def claim_fields
