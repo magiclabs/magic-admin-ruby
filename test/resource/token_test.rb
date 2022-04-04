@@ -7,7 +7,7 @@ describe MagicAdmin::Resource::Token do
     describe "public methods" do
       it "#validate" do
         claim = { "ext" => 1000, "nbf" => "nbf" }
-        rec_address = double("rec_address")
+        rec_address = double("rec_address").to_s
         proof = double("proof")
         time_now = 1_202_020
         allow(Time).to receive(:now).and_return(time_now)
