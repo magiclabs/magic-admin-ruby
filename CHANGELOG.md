@@ -16,6 +16,12 @@
 
 - <PR-#ISSUE> ...
 
+## `0.1.4` - 04/05/2022
+
+#### Changed
+
+- <PR-#16> https://github.com/magiclabs/magic-admin-ruby/issues/15
+
 ## `0.1.3` - 03/29/2022
 
 #### Changed
