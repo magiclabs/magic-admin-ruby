@@ -26,7 +26,7 @@ module MagicAdmin
       def initialize(magic)
         @magic = magic
       end
-      
+
       # Description:
       #   Method Retrieves information about the user by
       #   the supplied issuer
