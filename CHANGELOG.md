@@ -18,7 +18,7 @@
 
 ## `0.2.0` - 11/23/2022
 
-#### Changed
+#### Added
 
 - <PR-#18> Support mult-chain wallets in get_metadata calls
 
