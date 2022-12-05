@@ -45,6 +45,18 @@ describe MagicAdmin::Resource::User do
       end
     end
 
+    context "#get_metadata_by_issuer with wallet that does not exist" do
+      it "send request with options" do
+        expect(magic.http_client).to receive(:call)
+          .with(:get,
+                "/v1/admin/auth/user/get",
+                {
+                  params: { issuer: issuer, wallet_type: "dne" }, headers: {}
+                })
+        subject.get_metadata_by_issuer(issuer, "dne")
+      end
+    end
+
     context "#get_metadata_by_issuer with wallet" do
       it "send request with options" do
         expect(magic.http_client).to receive(:call)
