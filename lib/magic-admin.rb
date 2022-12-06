@@ -24,6 +24,7 @@ require "magic-admin/http/response"
 # Magic Resource Classes
 require "magic-admin/resource/token"
 require "magic-admin/resource/user"
+require "magic-admin/resource/wallet"
 
 # Magic Class to access resources
 class Magic
