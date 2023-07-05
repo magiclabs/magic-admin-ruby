@@ -38,6 +38,9 @@ class Magic
   # attribute reader for magic http client
   attr_reader :http_client
 
+  # attribute reader for magic client id
+  attr_reader :client_id
+
   # The constructor allows you to specify your own API secret key
   # and HTTP request strategy when your application interacting
   # with the Magic API.
@@ -72,9 +75,11 @@ class Magic
   def initialize(api_secret_key: nil,
                  retries: nil,
                  timeout: nil,
-                 backoff: nil)
+                 backoff: nil,
+                 client_id: nil)
     secret_key!(api_secret_key)
     http_client!(retries, timeout, backoff)
+    client_id!(client_id, api_secret_key)
   end
 
   # Description:
@@ -98,7 +103,7 @@ class Magic
   #   all the supported resources.
 
   def token
-    MagicAdmin::Resource::Token.new
+    MagicAdmin::Resource::Token.new(self)
   end
 
   private
@@ -133,4 +138,20 @@ class Magic
                         configure_timeout(timeout),
                         configure_backoff(backoff))
   end
+
+  def client_id!(client_id, secret_key)
+    @client_id = client_id || ENV["MAGIC_CLIENT_ID"]
+    if !@client_id
+      headers = MagicAdmin::Util.headers(secret_key)
+      options = { headers: headers }
+      response = self.http_client
+          .call(:get, "/v1/admin/client/get", options)
+
+      message = "Magic api secret key is not valid."
+      raise MagicAdmin::MagicError, message unless response.data[:data][:client_id]
+      
+      @client_id = response.data[:data][:client_id]
+    end
+  end
+
 end

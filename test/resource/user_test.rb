@@ -3,17 +3,17 @@
 require "spec_helper"
 
 describe MagicAdmin::Resource::User do
-  let(:magic) { Magic.new(api_secret_key: spec_api_secret_key) }
+  let(:magic) { Magic.new(api_secret_key: spec_api_secret_key, client_id: spec_client_id) }
   let(:public_address) do
-    MagicAdmin::Resource::Token.new.get_public_address(spec_did_token)
+    MagicAdmin::Resource::Token.new(magic).get_public_address(spec_did_token)
   end
 
   let(:issuer) do
-    MagicAdmin::Resource::Token.new.get_issuer(spec_did_token)
+    MagicAdmin::Resource::Token.new(magic).get_issuer(spec_did_token)
   end
 
   let(:construct_issuer_with_public_address) do
-    MagicAdmin::Resource::Token.new.construct_issuer_with_public_address(public_address)
+    MagicAdmin::Resource::Token.new(magic).construct_issuer_with_public_address(public_address)
   end
 
   let(:stub_response_body) do

@@ -9,6 +9,24 @@ module MagicAdmin
     # It provides methods to interact with the DID Token.
     class Token
 
+      # attribute reader for magic client object
+      attr_reader :magic
+
+      # The constructor allows you to create a token object
+      # when your application interacting with the Magic API
+      #
+      # Arguments:
+      #   magic: A Magic object.
+      #
+      # Returns:
+      #   A token object that provides access to all the supported resources.
+      #
+      # Examples:
+      #   Token.new(<magic>)
+      def initialize(magic)
+        @magic = magic
+      end
+
       # Description:
       #   Method validate did_token
       #
@@ -26,6 +44,7 @@ module MagicAdmin
         validate_claim_fields!(claim)
         validate_claim_ext!(time, claim["ext"])
         validate_claim_nbf!(time, claim["nbf"])
+        validate_claim_aud!(magic.client_id, claim["aud"])
       end
 
       # Description:
@@ -141,6 +160,15 @@ module MagicAdmin
         raise DIDTokenError, message
       end
 
+      def validate_claim_aud!(client_id, claim_aud)
+        
+        return true unless client_id != claim_aud
+
+        message = "Audience does not match client ID. Please ensure your secret key matches the application which generated the DID token."
+        raise DIDTokenError, message
+      end
+
     end
   end
 end
+

@@ -46,3 +46,6 @@ def spec_api_secret_key
   "sk_test_TESTTESTTESTTEST"
 end
 
+def spec_client_id
+  "clientId12345="
+end
