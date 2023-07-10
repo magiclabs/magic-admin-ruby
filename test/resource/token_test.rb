@@ -3,10 +3,15 @@
 require "spec_helper"
 
 describe MagicAdmin::Resource::Token do
+  let(:client_id) {'did:magic:testtest-test-test-test-testtesttest'}
+  let(:magic) { instance_double("MagicAdmin::Magic", client_id: client_id) }
+
+  subject(:token) { described_class.new(magic) }
+
   describe "instance methods" do
     describe "public methods" do
       it "#validate" do
-        claim = { "ext" => 1000, "nbf" => "nbf" }
+        claim = { "ext" => 1000, "nbf" => "nbf", "aud" => client_id }
         rec_address = double("rec_address").to_s
         proof = double("proof")
         time_now = 1_202_020
@@ -27,6 +32,9 @@ describe MagicAdmin::Resource::Token do
 
         expect(subject).to receive(:validate_claim_nbf!)
           .with(time_now, claim["nbf"])
+        
+        expect(subject).to receive(:validate_claim_aud!)
+          .with(client_id, claim["aud"])
 
         subject.validate(spec_did_token)
       end
@@ -179,6 +187,25 @@ describe MagicAdmin::Resource::Token do
 
           expect do
             subject.send(:validate_claim_nbf!, time, claim_nbf)
+          end .to raise_error(MagicAdmin::DIDTokenError, msg)
+        end
+      end
+      
+      context "#validate_claim_aud!" do
+        it "return true when aud matches" do
+          claim_aud = 'aud'
+          client_id = 'aud'
+          expect(subject.send(:validate_claim_ext!,
+                              client_id,
+                              claim_aud)).to be_truthy
+        end
+
+        it "raise error when aud does not match" do
+          claim_aud = 'audDiff'
+          client_id = 'aud'
+          msg = "Audience does not match client ID. Please ensure your secret key matches the application which generated the DID token."
+          expect do
+            subject.send(:validate_claim_aud!, client_id, claim_aud)
           end .to raise_error(MagicAdmin::DIDTokenError, msg)
         end
       end
